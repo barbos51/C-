@@ -1,0 +1,27 @@
+Create table books(
+	id int primary key auto_increment,
+    title varchar(100) not null,
+    author varchar(100) not null,
+    publication_year int,
+    is_available boolean default true
+    );
+
+alter table books add column genre varchar(50);
+
+insert into books(title,author,publication_year,genre) values
+('1984', 'George Orwell', 1949, 'Science Fiction'),
+('To Kill a Mockingbird', 'Harper Lee', 1960, 'Fiction'),
+('Pride and Prejudice', 'Jane Austen', 1813, 'Romance');
+
+Update books set is_available = False where id = 1;
+
+delete FROM books where id = 3;
+DELIMITER //
+
+create procedure GetAvailableBooks()
+begin
+	select * from books where is_available = true;
+end //
+DELIMITER ;
+
+call GetAvailableBooks()
