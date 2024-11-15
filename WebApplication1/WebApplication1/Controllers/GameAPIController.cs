@@ -68,7 +68,7 @@ namespace WebApplication1.Controllers
         }
         // PUT api/<GameAPIController>/5
         [HttpPut("{id}")]
-        public ActionResult<GameDTO> CreateGame([FromBody] GameDTO GameDTO)
+        public ActionResult<GameDTO> UpdateGame([FromBody] GameDTO GameDTO)
         {
             if (GameDTO == null)
             {
