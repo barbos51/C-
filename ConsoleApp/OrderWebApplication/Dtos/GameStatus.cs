@@ -2,9 +2,8 @@
 
 public enum GameStatus
 {
-    Pending,
+    Release,
     Processing,
-    Shipped,
-    Delivered,
+    Skipped,
     Canceled
 }
