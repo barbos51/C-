@@ -1,11 +1,14 @@
 ﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 using ConsoleApp;
 
 var person = new Person
 {
     Name = "skif",
     Age = 28,
-    Email = "skif@example.com"
+    Email = "skif@example.com",
+    Time = 30,
+    Date = new DateTime(2024, 11, 10, 15, 30, 0)
 };
 
 var jsonString = JsonSerializer.Serialize(person);
@@ -18,8 +21,22 @@ if (deserializedPerson == null)
 
 Console.WriteLine($"Name: {deserializedPerson.Name}, " +
                   $"Age: {deserializedPerson.Age}, " +
-                  $"Email: {deserializedPerson.Email}");
+                  $"Email: {deserializedPerson.Email}, " +
+                  $"Time: {deserializedPerson.Time*60}, " +
+                  $"Date: {deserializedPerson.Date.ToString("MM-dd-yy")}");
 
+public class DateTimeConverter : JsonConverter<DateTime>
+{
+    public override DateTime Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    {
+        return DateTime.Parse(reader.GetString()!);
+    }
+
+    public override void Write(Utf8JsonWriter writer, DateTime value, JsonSerializerOptions options)
+    {
+        writer.WriteStringValue(value.ToString("MM-dd-yy"));
+    }
+}
 
 
 namespace ConsoleApp
@@ -29,5 +46,7 @@ namespace ConsoleApp
         public string Name { get; init; } = null!;
         public int Age { get; init; }
         public string Email { get; init; } = null!;
+        public int Time { get; init; }
+        public DateTime Date { get; init; }
     }
 }
