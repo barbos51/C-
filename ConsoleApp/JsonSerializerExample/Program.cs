@@ -1,5 +1,6 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Threading.Tasks.Sources;
 using ConsoleApp;
 
 var person = new Person
@@ -9,6 +10,12 @@ var person = new Person
     Email = "skif@example.com",
     Time = 30,
     Date = new DateTime(2024, 11, 10, 15, 30, 0)
+};
+
+var options = new JsonSerializerOptions
+{
+    WriteIndented = true,
+    Converters = { new DateTimeConverter() }
 };
 
 var jsonString = JsonSerializer.Serialize(person);
